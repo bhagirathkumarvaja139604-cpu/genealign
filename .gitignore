@@ -1,0 +1,17 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pytest cache
+.pytest_cache/
+
+# Streamlit config/cache
+.streamlit/
+
+# Virtual Environment
+venv/
+.venv
+env/
+ENV/

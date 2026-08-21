@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeneAlign &mdash; Structural Bioinformatics</title>
+  <!-- Bootstrap 5 & Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Shared Style Sheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.svg">
+  <style>
+    /* 3D Viewport container sizing */
+    #gldiv {
+      width: 100%;
+      height: 480px;
+      position: relative;
+      background-color: #11141a;
+      border: 1px solid var(--border-journal);
+    }
+    
+    .badge-guide {
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COMMON NAVBAR -->
+  <nav id="common-navbar" class="navbar navbar-expand-lg navbar-journal sticky-top"></nav>
+
+  <div class="container py-4">
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <div class="masthead-meta">Laboratory Notebook // Section VII // Structural Biology</div>
+      <h1 class="display-5 my-2 journal-title">Structural Bioinformatics</h1>
+      <p class="text-muted col-lg-8 mx-auto mb-0" style="font-size: 0.95rem;">
+        Explore three-dimensional molecular architectures. Download coordinates from the RCSB Protein Data Bank (PDB) 
+        and render macromolecular conformations interactively in 3D.
+      </p>
+    </header>
+
+    <div class="row">
+      <!-- CONCEPTUAL EDUCATION (Left Column) -->
+      <section class="col-lg-5 col-12 mb-4">
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">7.1</span>Macromolecular Modeling</span>
+          <p class="small text-muted text-justify">
+            Understanding a protein's 3D structure is key to understanding its function, binding ligands, and engineering new molecules. 
+          </p>
+          <p class="small text-muted text-justify">
+            The <strong>Protein Data Bank (PDB)</strong> is the worldwide database for structural data on biological macromolecules, determined by experimental techniques such as X-ray crystallography, Nuclear Magnetic Resonance (NMR) spectroscopy, and Cryogenic Electron Microscopy (Cryo-EM).
+          </p>
+          <p class="small text-muted text-justify">
+            Where experimental coordinates are unavailable, structure prediction algorithms must be used:
+          </p>
+          <ul class="small text-muted ps-3 mb-0" style="list-style-type: square;">
+            <li class="mb-2">
+              <strong>Homology Modeling</strong>: Builds 3D coordinates based on an aligned protein structure of a homologous sequence (template).
+            </li>
+            <li class="mb-2">
+              <strong>De Novo Modeling &amp; AlphaFold</strong>: Deep learning models (like DeepMind's AlphaFold) predict native structure direct from primary sequence by learning residue spatial orientations and evolutionary constraints.
+            </li>
+          </ul>
+          <div class="alert alert-warning rounded-0 border-journal small mt-3 mb-0">
+            <i class="bi bi-info-circle-fill"></i> Note: This portal describes prediction methodologies conceptually; calculations are executed on remote CPU cluster backends, not client-side.
+          </div>
+        </div>
+
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">7.2</span>Select Structures</span>
+          <p class="small text-muted">Click any model below to load coordinates from PDB services:</p>
+          
+          <div class="table-responsive">
+            <table class="table table-sm table-journal table-bordered small">
+              <thead>
+                <tr class="table-active">
+                  <th>ID</th>
+                  <th>Protein Molecule Name</th>
+                  <th>Taxon Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#" onclick="quickLoadPDB('1CRN'); return false;" class="monospace fw-bold">1CRN</a></td>
+                  <td>Crambin (Plant Seed Protein)</td>
+                  <td><em>Abyssinian kale</em></td>
+                </tr>
+                <tr>
+                  <td><a href="#" onclick="quickLoadPDB('4HHB'); return false;" class="monospace fw-bold">4HHB</a></td>
+                  <td>Hemoglobin (O2 Carrier tetramer)</td>
+                  <td><em>Homo sapiens</em></td>
+                </tr>
+                <tr>
+                  <td><a href="#" onclick="quickLoadPDB('2POR'); return false;" class="monospace fw-bold">2POR</a></td>
+                  <td>OmpF Outer Membrane Porin</td>
+                  <td><em>Rhodobacter capsulatus</em></td>
+                </tr>
+                <tr>
+                  <td><a href="#" onclick="quickLoadPDB('1AGB'); return false;" class="monospace fw-bold">1AGB</a></td>
+                  <td>A/B Chain insulin hexamer</td>
+                  <td><em>Bos taurus</em></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE 3D WORKBENCH (Right Column) -->
+      <section class="col-lg-7 col-12 mb-4">
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">7.3</span>3D Molecular Workbench</span>
+          
+          <!-- CONTROLS PANEL -->
+          <div class="p-3 border border-journal bg-light mb-3">
+            <div class="row g-2 align-items-center">
+              <div class="col-sm-5">
+                <label for="pdb-id" class="label-journal mb-1">PDB Identification ID</label>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text rounded-0 bg-dark text-white font-monospace" style="font-size:0.75rem;">PDB:</span>
+                  <input type="text" id="pdb-id" class="form-control monospace" maxlength="4" value="1CRN" placeholder="1CRN">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label for="viewer-style" class="label-journal mb-1">Visualization Style</label>
+                <select id="viewer-style" class="form-select form-select-sm">
+                  <option value="cartoon" selected>Cartoon Spectrum</option>
+                  <option value="sphere">CPK Spheres (Spacefill)</option>
+                  <option value="stick">Stick Representation</option>
+                  <option value="line">Wireframe Line</option>
+                </select>
+              </div>
+              <div class="col-sm-3 pt-sm-3 text-end">
+                <button id="btn-load-pdb" class="btn btn-sm btn-journal-accent w-100 mt-1"><i class="bi bi-cloud-download-fill me-1"></i>Fetch PDB</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEWPORT READOUT PANEL -->
+          <div class="readout-panel" style="padding: 0;">
+            <div class="p-2 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center" style="background-color: var(--bg-instrument-offset);">
+              <span class="small font-monospace" style="font-size: 0.7rem; color:var(--text-instrument-muted);">3D VIEWPORT // INTERACTIVE MOL3D CANVAS</span>
+              <span id="viewer-loading" class="spinner-border spinner-border-sm text-info d-none" role="status"></span>
+              <span id="viewer-failed" class="text-danger small font-monospace d-none" style="font-size:0.7rem;"><i class="bi bi-x-circle-fill"></i> Failed to Fetch</span>
+            </div>
+            
+            <!-- GLDIV CANVAS CONTAINER -->
+            <div id="gldiv">
+              <!-- WebGL Canvas injected by 3Dmol.js -->
+            </div>
+            
+            <div class="p-2 small text-muted font-monospace border-top border-secondary border-opacity-25 text-white-50" style="font-size: 0.72rem; line-height: 1.4; background-color: var(--bg-instrument-offset);">
+              <div><i class="bi bi-info-circle text-info"></i> Controls: <strong>Left-click + Drag</strong> to rotate; <strong>Right-click + Drag</strong> or scroll to zoom; <strong>Middle-click + Drag</strong> to translate (pan).</div>
+              <div class="mt-1 text-warning"><i class="bi bi-wifi"></i> Requires HTTP connectivity to files.rcsb.org at runtime in order to pull PDB files.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- COMMON FOOTER -->
+  <footer id="common-footer" class="footer-journal"></footer>
+
+  <!-- BOOTSTRAP BUNDLE JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- JQUERY & 3DMOL CDN (REQUIRED BY 3DMOL FOR CANVAS SHADING) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/3dmol/1.8.0/3Dmol-min.js"></script>
+
+  <!-- SHARED DATA LAYER -->
+  <script src="js/shared.js"></script>
+  <!-- CORE LOGIC -->
+  <script src="js/structural.js"></script>
+</body>
+</html>

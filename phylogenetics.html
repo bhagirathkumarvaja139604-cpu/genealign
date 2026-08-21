@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeneAlign &mdash; Phylogenetic Analysis</title>
+  <!-- Bootstrap 5 & Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Shared Style Sheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.svg">
+</head>
+<body>
+
+  <!-- COMMON NAVBAR -->
+  <nav id="common-navbar" class="navbar navbar-expand-lg navbar-journal sticky-top"></nav>
+
+  <div class="container py-4">
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <div class="masthead-meta">Laboratory Notebook // Section VI // Evolutionary Biology</div>
+      <h1 class="display-5 my-2 journal-title">Phylogenetic Analysis</h1>
+      <p class="text-muted col-lg-8 mx-auto mb-0" style="font-size: 0.95rem;">
+        Reconstruct evolutionary lineages. Enter 3 to 6 ancestral sequences to calculate a pairwise distance matrix 
+        and compile a taxonomic hierarchical guide tree using the UPGMA clustering algorithm.
+      </p>
+    </header>
+
+    <div class="row">
+      <!-- INPUT AND EXPLANATIONS (Left Column) -->
+      <section class="col-lg-5 col-12 mb-4">
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">6.1</span>Methodology Context</span>
+          <p class="small text-muted text-justify">
+            A <strong>phylogenetic tree</strong> is a diagrammatic representation of the evolutionary relationships and lines of descent among various biological species or genes.
+          </p>
+          <p class="small text-muted text-justify">
+            The fundamental premise of molecular phylogenetics is that sequences accumulate mutations over time. Therefore, the number of differences (mutations) between two homologous sequences corresponds to their evolutionary distance.
+          </p>
+          <p class="small text-muted text-justify">
+            Our pipeline calculates taxonomic ties through a two-step process:
+          </p>
+          <ul class="small text-muted ps-3 mb-0" style="list-style-type: decimal;">
+            <li class="mb-1">
+              <strong>Pairwise Distance Matrix</strong>: Computes Levenshtein edit distance between all pairs. It handles insertion/deletion (indel) events.
+            </li>
+            <li class="mb-1">
+              <strong>UPGMA Clustering</strong>: Group coordinates iteratively based on nearest distances, forming new nodes with heights proportional to half of their merge distance.
+            </li>
+          </ul>
+        </div>
+
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">6.2</span>Sequence Matrix Setup</span>
+          
+          <div class="p-3 border border-journal bg-light mb-3">
+            <p class="small text-muted mb-3"><i class="bi bi-info-circle-fill"></i> Standardize nucleotide sequences (lengths can differ, but similar sizes produce clean tree branches):</p>
+            
+            <div id="inputs-container">
+              <!-- Dynamically populated sequence inputs rows -->
+            </div>
+            
+            <div class="d-flex justify-content-between mt-3">
+              <button id="btn-add-seq" class="btn btn-sm btn-journal"><i class="bi bi-plus-lg"></i> Add Taxon</button>
+              <div class="d-flex gap-2">
+                <button id="btn-draw-tree" class="btn btn-sm btn-journal-accent"><i class="bi bi-diagram-3-fill me-1"></i>Draw Tree</button>
+                <button id="btn-reset" class="btn btn-sm btn-journal"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- READOUTS PANEL AND MATRIX (Right Column) -->
+      <section class="col-lg-7 col-12 mb-4">
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">6.3</span>Phylogeny Tree Readout</span>
+          
+          <div class="readout-panel">
+            <div class="console-indicator">Calculated Pairwise Distance Matrix</div>
+            
+            <div class="table-responsive mb-4" style="border: 1px solid var(--border-instrument); background-color: var(--bg-instrument-offset);">
+              <table class="table table-dark table-sm table-bordered text-center mb-0 small" style="font-size:0.8rem;">
+                <thead>
+                  <tr id="matrix-hdr-row" class="table-active font-monospace">
+                    <!-- Matrix Headers -->
+                  </tr>
+                </thead>
+                <tbody id="matrix-body" class="font-monospace">
+                  <!-- Matrix content -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="console-indicator">
+              <span>UPGMA Dendrogram Output</span>
+              <span class="text-white-50 small">Numbers indicate branch lengths</span>
+            </div>
+            
+            <div id="tree-canvas" class="border border-secondary border-opacity-25 rounded overflow-auto" style="min-height:220px; background-color:#11141a;">
+              <!-- Dynamic SVG Phylogenetic Tree branches render here -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- COMMON FOOTER -->
+  <footer id="common-footer" class="footer-journal"></footer>
+
+  <!-- BOOTSTRAP BUNDLE JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SHARED DATA LAYER -->
+  <script src="js/shared.js"></script>
+  <!-- CORE LOGIC -->
+  <script src="js/phylogenetics.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeneAlign &mdash; About &amp; Methodology</title>
+  <!-- Bootstrap 5 & Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Shared Style Sheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.svg">
+</head>
+<body>
+
+  <!-- COMMON NAVBAR -->
+  <nav id="common-navbar" class="navbar navbar-expand-lg navbar-journal sticky-top"></nav>
+
+  <div class="container py-4">
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <div class="masthead-meta">Laboratory Notebook // Section II // Methodological Overview</div>
+      <h1 class="display-5 my-2 journal-title">Methodological Specifications</h1>
+      <p class="text-muted col-lg-8 mx-auto mb-0" style="font-size: 0.95rem;">
+        Explore the algorithms and technologies underpinning GeneAlign. Review objective scopes, 
+        mathematical alignments, and phylogenetic tree constructions.
+      </p>
+    </header>
+
+    <div class="row">
+      <!-- METHODOLOGY & ALGORITHMS (Left Column) -->
+      <section class="col-lg-7 col-12 mb-4">
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">2.1</span>Sequence Alignment Mechanics</span>
+          <p class="small text-muted text-justify">
+            Pairwise sequence alignment is the method of arranging primary sequences of DNA, RNA, or protein to identify regions of similarity. These similarities are direct indicators of functional, structural, or evolutionary relationships:
+          </p>
+          <div class="p-3 border border-journal bg-light mb-3">
+            <h6 class="serif-heading fw-bold mb-1" style="font-size: 0.95rem;">Needleman-Wunsch (Global Alignment)</h6>
+            <p class="small text-muted mb-0">
+              Formulated in 1970, Needleman-Wunsch uses dynamic programming to establish the optimal alignment over the entire length of two sequences. The score matrix is initialized with cumulative gap penalties, and traceback proceeds from the bottom-rightmost cell, $(M,N)$, back to the origin, $(0,0)$. This is ideal for comparing closely related genes or proteins of similar length.
+            </p>
+          </div>
+          <div class="p-3 border border-journal bg-light mb-3">
+            <h6 class="serif-heading fw-bold mb-1" style="font-size: 0.95rem;">Smith-Waterman (Local Alignment)</h6>
+            <p class="small text-muted mb-0">
+              Introduced in 1981, Smith-Waterman is designed to locate highly similar local regions (sub-sequences) between sequences that may otherwise differ globally. To accomplish this, cell values are clamped to a minimum of 0 ($D(i,j) = \max(0, \text{diagonal}, \text{up}, \text{left})$). Traceback starts at the highest-scoring cell anywhere in the matrix and stops as soon as a cell with a score of 0 is reached.
+            </p>
+          </div>
+        </div>
+
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">2.2</span>Clustering &amp; Taxonomic Mapping</span>
+          <div class="p-3 border border-journal bg-light mb-0">
+            <h6 class="serif-heading fw-bold mb-1" style="font-size: 0.95rem;">UPGMA (Guide Tree Building)</h6>
+            <p class="small text-muted mb-2">
+              The <strong>Unweighted Pair Group Method with Arithmetic Mean (UPGMA)</strong> is a simple agglomerative (bottom-up) clustering method used to construct phylogenetic trees. 
+            </p>
+            <p class="small text-muted mb-0">
+              The algorithm starts with each sequence as a single cluster. It computes a pairwise distance matrix using edit distances to account for insertion/deletion events. In each step, the two closest clusters are merged, and their distance to all other clusters is calculated using a weighted average. The process is repeated until a single root remains, yielding a tree where branch lengths represent evolutionary distances.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- OBJECTIVES & DEV STATS (Right Column) -->
+      <section class="col-lg-5 col-12 mb-4">
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">2.3</span>Objective &amp; Scope</span>
+          <p class="small text-muted text-justify">
+            GeneAlign was created as an interactive, open-source bioinformatics educational workbook. It allows students and researchers to visualize complex algorithms on standard, client-side web platforms without backend server requirements.
+          </p>
+          <ul class="small text-muted ps-3 mb-0" style="list-style-type: square;">
+            <li class="mb-2">
+              <strong>Transparency</strong>: Step-by-step visualizations explain intermediate steps in the dynamic programming matrix calculations.
+            </li>
+            <li class="mb-2">
+              <strong>Precision</strong>: Relies on physical chemistry models, such as peptide residue weights and Henderson-Hasselbalch equations, to determine protein molecular properties and isoelectric points.
+            </li>
+            <li class="mb-2">
+              <strong>Interactivity</strong>: Features interactive 3D visualizers, tree rendering, and DNA-to-protein translation tools.
+            </li>
+          </ul>
+        </div>
+
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">2.4</span>Technical Profile</span>
+          <div class="readout-panel">
+            <div class="console-indicator">Development Environment Specifications</div>
+            <div class="small monospace text-white-50" style="line-height: 1.6;">
+              <div>[PLATFORM] : web-client execution</div>
+              <div>[MARKUP]   : HTML5 standard compliance</div>
+              <div>[STYLE]    : CSS3 Custom stylesheet</div>
+              <div>[LAYOUT]   : Bootstrap v5.3.0 (CDN)</div>
+              <div>[ICONS]    : Bootstrap Icons v1.10.5</div>
+              <div>[ENGINE]    : Vanilla JavaScript (ES6+)</div>
+              <div>[LIBRARIES] : jQuery v3.6.0 (CDN)</div>
+              <div>[3DMOL]     : 3Dmol.js v1.8.0 (WebGL CDN)</div>
+              <div class="mt-2 pt-2 border-top border-secondary border-opacity-25 text-info">
+                STATUS: DEPLOYED (SANDBOX LOCALHOST)
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- COMMON FOOTER -->
+  <footer id="common-footer" class="footer-journal"></footer>
+
+  <!-- BOOTSTRAP BUNDLE JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SHARED DATA LAYER -->
+  <script src="js/shared.js"></script>
+</body>
+</html>

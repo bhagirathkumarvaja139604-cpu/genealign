@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeneAlign &mdash; Genomics &amp; Proteomics</title>
+  <!-- Bootstrap 5 & Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Shared Style Sheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.svg">
+</head>
+<body>
+
+  <!-- COMMON NAVBAR -->
+  <nav id="common-navbar" class="navbar navbar-expand-lg navbar-journal sticky-top"></nav>
+
+  <div class="container py-4">
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <div class="masthead-meta">Laboratory Notebook // Section V // Molecular Genomics</div>
+      <h1 class="display-5 my-2 journal-title">Genomics &amp; Proteomics</h1>
+      <p class="text-muted col-lg-8 mx-auto mb-0" style="font-size: 0.95rem;">
+        Explore the Molecular Dogma of Genetics. Transcribe DNA coding strands to messenger RNA (mRNA), 
+        calculate physical reverse complement sequences, and translate active codon frames into amino acid chains.
+      </p>
+    </header>
+
+    <div class="row">
+      <!-- EDUCATIONAL CONTENT (Left Column) -->
+      <section class="col-lg-5 col-12 mb-4">
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">5.1</span>The Molecular Dogma</span>
+          <p class="small text-muted text-justify">
+            The flow of genetic information is governed by the <strong>Central Dogma of Molecular Biology</strong>: DNA is transcribed into RNA, which is subsequently translated into functional proteins.
+          </p>
+          <ul class="small text-muted ps-3 mb-0" style="list-style-type: decimal;">
+            <li class="mb-2">
+              <strong>DNA (The Genome)</strong>: The hereditary library containing instructions for life. It is packaged in chromosomes, and the sum of all DNA is the genome.
+            </li>
+            <li class="mb-2">
+              <strong>Gene</strong>: A specific sequence locus on DNA that encodes instructions for making a protein or functional RNA molecule.
+            </li>
+            <li class="mb-2">
+              <strong>mRNA (Transcription)</strong>: RNA polymerase complements the template DNA strand to synthesize a single-stranded messenger RNA. Thymine (T) is replaced by Uracil (U).
+            </li>
+            <li class="mb-2">
+              <strong>Protein (The Proteome)</strong>: Ribosomes scan mRNA codons (triplets of nucleotides) to pair them with amino acids, constructing polypeptides. The proteome is the collection of all expressed proteins.
+            </li>
+          </ul>
+        </div>
+
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">5.2</span>Comparative Genomics</span>
+          <p class="small text-muted text-justify mb-2">
+            <strong>Comparative Genomics</strong> involves comparing the genomic features of different organisms (genes, regulatory sequences, chromosome structure) to understand evolutionary relationships and identify functional domains.
+          </p>
+          <p class="small text-muted text-justify mb-0">
+            Within this domain, pairwise sequence alignments (such as the <strong>global NW</strong> and <strong>local SW</strong> algorithms implemented in our sequence analysis suite) are vital. By aligning genomes across different species, mutations (mismatches) and insertion/deletions (gaps) are highlighted, allowing researchers to trace phylogenetic ancestry and locate conserved coding islands.
+          </p>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE PIPELINE TOOL (Right Column) -->
+      <section class="col-lg-7 col-12 mb-4">
+        <div class="journal-section">
+          <span class="journal-section-title"><span class="lab-section-num">5.3</span>Dogma Processing Engine</span>
+          
+          <!-- INPUT -->
+          <div class="p-3 border border-journal bg-light mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label for="dna-seq" class="label-journal mb-0">Input DNA Coding Strand (5' &rarr; 3')</label>
+              <input type="file" id="fasta-file1" class="d-none" accept=".fasta,.fa,.txt">
+              <button class="btn btn-sm btn-journal py-0 px-2 text-decoration-none" onclick="document.getElementById('fasta-file1').click()">
+                <i class="bi bi-upload small"></i> FASTA Upload
+              </button>
+            </div>
+            <textarea id="dna-seq" class="form-control monospace" rows="4" placeholder="Enter DNA nucleotides (e.g. ATGGTGCACCTGACTCCT...)..."></textarea>
+            <div id="dna-invalid" class="text-danger small mt-1 d-none monospace"></div>
+            
+            <div class="d-flex gap-2 mt-3">
+              <button id="btn-process" class="btn btn-journal-accent flex-grow-1"><i class="bi bi-cpu-fill me-1"></i>Process Central Dogma</button>
+              <button id="btn-reset" class="btn btn-journal"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+            </div>
+          </div>
+
+          <!-- OUTPUT INSTRUMENT DISPLAY -->
+          <div class="readout-panel">
+            <div class="console-indicator">Central Dogma Pipeline Readout</div>
+            
+            <!-- Transcription (mRNA) Output -->
+            <div class="mb-3">
+              <div class="text-white-50 small font-monospace pb-1" style="font-size: 0.72rem; border-bottom: 1px solid var(--border-instrument);">
+                <i class="bi bi-arrow-right-short text-info"></i> mRNA Transcript (Transcribed 5' &rarr; 3')
+              </div>
+              <div id="readout-mrna" class="p-2 monospace text-info bg-black rounded" style="overflow-x: auto; font-size: 0.9rem; word-break: break-all;">
+                -
+              </div>
+            </div>
+
+            <!-- Reverse Complement Output -->
+            <div class="mb-3">
+              <div class="text-white-50 small font-monospace pb-1" style="font-size: 0.72rem; border-bottom: 1px solid var(--border-instrument);">
+                <i class="bi bi-arrow-right-short text-warning"></i> Reverse Complement DNA Strand (Reversed 5' &rarr; 3')
+              </div>
+              <div id="readout-revcomp" class="p-2 monospace text-warning bg-black rounded" style="overflow-x: auto; font-size: 0.9rem; word-break: break-all;">
+                -
+              </div>
+            </div>
+
+            <!-- Polypeptide Translation Output -->
+            <div class="mb-3">
+              <div class="text-white-50 small font-monospace pb-1" style="font-size: 0.72rem; border-bottom: 1px solid var(--border-instrument);">
+                <i class="bi bi-arrow-right-short text-success"></i> Translated Polypeptide Residue Chain
+              </div>
+              <div id="readout-protein" class="p-2 bg-black rounded" style="overflow-x: auto; font-size: 0.88rem;">
+                -
+              </div>
+            </div>
+
+            <!-- Stats Block -->
+            <div>
+              <div class="text-white-50 small font-monospace pb-1" style="font-size: 0.72rem; border-bottom: 1px solid var(--border-instrument);">
+                <i class="bi bi-graph-up text-cyan"></i> Sequence Diagnostics Summary
+              </div>
+              <div id="readout-stats" class="p-2 small text-muted font-monospace text-white-50" style="line-height: 1.5;">
+                -
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- COMMON FOOTER -->
+  <footer id="common-footer" class="footer-journal"></footer>
+
+  <!-- BOOTSTRAP BUNDLE JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SHARED DATA LAYER -->
+  <script src="js/shared.js"></script>
+  <!-- CORE LOGIC -->
+  <script src="js/genomics.js"></script>
+</body>
+</html>
