@@ -17,7 +17,7 @@ A complete, interactive Academic Compiler Design project developed in Python usi
 
 ---
 
-## 🎓 Academic Explanation & Viva Prep
+## 🎓 Academic Explanation 
 
 This project is tailored for System Programming and Compiler Design laboratories. Below are the key interview (viva-voce) questions explained in beginner-friendly language:
 
