@@ -5,52 +5,15 @@ A complete, interactive Academic Compiler Design project developed in Python usi
 ---
 
 ## 📖 Table of Contents
-1. [Academic Explanation & Viva Prep](#-academic-explanation--viva-prep)
-2. [How It Works](#⚙️-how-it-works)
-3. [Features](#-features)
-4. [Technologies Used](#-technologies-used)
-5. [Project Architecture](#-project-architecture)
-6. [Installation & Setup](#-installation--setup)
-7. [Running the Application](#-running-the-application)
-8. [Example Output](#-example-output)
-9. [Future Improvements](#-future-improvements)
+1. [How It Works](#⚙️-how-it-works)
+2. [Features](#-features)
+3. [Technologies Used](#-technologies-used)
+4. [Project Architecture](#-project-architecture)
+5. [Installation & Setup](#-installation--setup)
+6. [Running the Application](#-running-the-application)
+7. [Example Output](#-example-output)
+8. [Future Improvements](#-future-improvements)
 
----
-
-## 🎓 Academic Explanation 
-
-This project is tailored for System Programming and Compiler Design laboratories. Below are the key interview (viva-voce) questions explained in beginner-friendly language:
-
-### What is Lexical Analysis?
-Lexical analysis is the **first phase of a compiler**. Its main job is to scan the characters of the source code from left to right and group them into logical sequences called *lexemes*.
-
-### What is a Lexer (or Tokenizer)?
-A **lexer** is the module/program that performs lexical analysis. It takes raw text as input, removes whitespace and comments, and produces a structured stream of tokens.
-
-### What is a Token?
-A **token** is an abstract category of lexical elements. It acts as an identifier for syntax analysis (parsing). Examples: `KEYWORD`, `IDENTIFIER`, `INTEGER`, `ARITHMETIC_OPERATOR`, `SEMICOLON`.
-
-### What is a Lexeme?
-A **lexeme** is the actual concrete text string in the source code that matches the pattern of a token.
-* *Example:* In `int count = 10;`, the string `int` is a lexeme matching token `KEYWORD`, and the string `count` is a lexeme matching token `IDENTIFIER`.
-
-### What is a Token Stream?
-A **token stream** is the ordered sequence of tokens produced by the lexer. This stream is passed directly to the next phase of the compiler: the **Syntax Analyzer (Parser)** to build the Abstract Syntax Tree (AST).
-
-### Why are Regular Expressions (Regex) used?
-Regular expressions are mathematical representations of regular languages. Since programming language tokens can be defined using regular grammars (represented by Regular Expressions), we can use regex patterns to efficiently match and categorize characters into lexemes.
-
-### What is the Longest-Match Principle (Maximal Munch)?
-When scanning source code, if multiple regex patterns match the input text, the lexer must choose the pattern that matches the **longest sequence of characters**.
-* *Example:* For the lexeme `>=`, if the lexer did not follow the longest-match principle, it might split it into `>` (relational operator) and `=` (assignment operator). Standard lexers ensure `>=` is recognized as a single relational operator.
-* *How it's solved here:* Patterns are carefully sorted and compiled so that multi-character operators (e.g. `++`, `>=`, `&&`, `||`) are matched first, followed by single-character options (e.g. `+`, `>`, `&`, `|`).
-
-### How are Lexical Errors handled?
-A lexical error occurs when the character sequence cannot be matched to any valid token pattern of the programming language.
-* *Example:* In `int x = 10 @ 20;`, the character `@` is not valid in C.
-* *Handling:* The tokenizer categorizes it as `UNKNOWN`, reports a descriptive message, and continues tokenization. It logs the line, column, and character to prevent compiler crash.
-
----
 
 ## ⚙️ How It Works
 
